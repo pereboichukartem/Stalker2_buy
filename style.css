@@ -1,3 +1,4 @@
+/* RESET & BASE */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +12,7 @@ body {
     color: white;
 }
 
-/* VIDEO & OVERLAY */
+/* BACKGROUND VIDEO & EFFECTS */
 .bg-video {
     position: fixed;
     inset: 0;
@@ -24,81 +25,74 @@ body {
 .overlay {
     position: fixed;
     inset: 0;
-    background: linear-gradient(to bottom, rgba(0,0,0,.82), rgba(0,0,0,.45), rgba(0,0,0,.88));
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.8),
+        rgba(0,0,0,0.4),
+        rgba(0,0,0,0.9)
+    );
     z-index: -1;
 }
 
-/* NOISE */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    opacity: .05;
+    opacity: 0.05;
     background-image: radial-gradient(#fff 1px, transparent 1px);
     background-size: 4px 4px;
     pointer-events: none;
     z-index: 2;
 }
 
-/* NAVBAR */
+/* NAVIGATION */
 nav {
     position: absolute;
     top: 0;
-    left: 0;
     width: 100%;
-    padding: 32px 48px;
+    padding: 25px 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    z-index: 5;
+    z-index: 10;
 }
 
 .logo {
-    width: 140px;
-    opacity: .92;
-    transition: .3s;
-}
-
-.logo:hover {
-    opacity: 1;
-    transform: scale(1.03);
+    width: 120px;
+    opacity: 0.9;
+    transition: 0.3s;
 }
 
 nav ul {
     display: flex;
-    gap: 50px;
+    gap: 40px;
     list-style: none;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    font-size: 30px;
+    font-size: 22px;
     font-weight: 700;
     position: relative;
-    transition: .25s;
+    transition: 0.3s;
 }
 
 nav a::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -8px;
+    bottom: -5px;
     width: 0%;
     height: 2px;
     background: #d89b17;
-    transition: .25s;
+    transition: 0.3s;
 }
 
-nav a:hover {
-    color: #d89b17;
-}
+nav a:hover { color: #d89b17; }
+nav a:hover::after { width: 100%; }
 
-nav a:hover::after {
-    width: 100%;
-}
-
-/* HERO */
+/* HERO SECTION */
 .hero {
     height: 100vh;
     display: flex;
@@ -106,205 +100,156 @@ nav a:hover::after {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
 }
 
 .hero h1 {
-    font-size: clamp(90px, 12vw, 220px);
+    font-size: clamp(50px, 10vw, 120px);
     font-weight: 700;
-    letter-spacing: 12px;
+    letter-spacing: 8px;
     text-transform: uppercase;
-    color: #f2f2f2;
-    line-height: .95;
-    text-shadow: 0 0 25px rgba(255,255,255,.08), 0 10px 40px rgba(0,0,0,.85);
+    line-height: 1;
     animation: flicker 5s infinite;
 }
 
 .hero p {
-    margin-top: 18px;
-    margin-bottom: 38px;
-    font-size: 38px;
-    color: #d8d8d8;
-    text-shadow: 0 5px 20px rgba(0,0,0,.9);
+    margin: 15px 0 30px;
+    font-size: 22px;
+    color: #ccc;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-@keyframes flicker {
-    0% { opacity: 1; }
-    2% { opacity: .92; }
-    4% { opacity: 1; }
-    8% { opacity: .95; }
-    70% { opacity: 1; }
-    72% { opacity: .96; }
-    100% { opacity: 1; }
-}
-
-/* BUTTON WRAPPER */
+/* STALKER BUTTON & WRAPPER */
 .buy-wrapper {
     position: relative;
     display: inline-block;
 }
 
-/* BUTTON MAIN */
 .stalker-btn {
-    position: relative;
     display: inline-flex;
     align-items: center;
-    height: 74px;
+    height: 60px; /* Зменшено для кращого вигляду */
     background: #e4dccd;
     color: #111;
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
-    z-index: 5;
-    transition: .25s;
+    transition: 0.3s;
     
-    /* Краще використовувати пікселі замість відсотків для рівних кутів */
+    /* Зрізані кути кнопкни */
     clip-path: polygon(
-        15px 0, calc(100% - 15px) 0, 
-        100% 15px, 100% calc(100% - 15px), 
-        calc(100% - 15px) 100%, 15px 100%, 
-        0 calc(100% - 15px), 0 15px
+        12px 0, calc(100% - 12px) 0, 
+        100% 12px, 100% calc(100% - 12px), 
+        calc(100% - 12px) 100%, 12px 100%, 
+        0 calc(100% - 12px), 0 12px
     );
 }
 
 .stalker-btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 0 0 2px #000, 0 0 30px rgba(216,155,23,.35), 0 15px 45px rgba(0,0,0,.6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* LEFT ACCENT */
+/* Жовтий акцент з трикутником */
 .btn-accent {
-    width: 82px;
+    width: 70px;
     height: 100%;
+    background: #d89b17;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #d89b17;
-    font-size: 32px;
-    clip-path: polygon(
-        0 0, 100% 0, 
-        100% 50%, 
-        100% 100%, 0 100%
-    );
+    position: relative;
+    /* Стрілка вправо через clip-path */
+    clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
 }
 
-/* CSS-трікутник замість clip-path для ідеального врізання */
-.btn-accent::after {
-    content: '';
-    position: absolute;
-    right: -20px;
-    top: 0;
-    border-top: 37px solid transparent;
-    border-bottom: 37px solid transparent;
-    border-left: 20px solid #d89b17;
-    z-index: 2;
+.radiation-icon {
+    font-size: 28px;
+    margin-right: 5px;
 }
 
-/* TEXT */
 .btn-text {
-    padding: 0 38px 0 20px; /* Зменшив лівий відступ, щоб текст був ближче до стрілки */
-    font-size: 30px;
+    padding: 0 30px 0 15px;
+    font-size: 24px;
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
-/* ARROW */
 .btn-arrow {
     padding-right: 20px;
-    font-size: 14px;
-    transition: transform .25s ease;
-}
-
-.buy-wrapper:hover .btn-arrow {
-    transform: rotate(180deg);
+    font-size: 12px;
+    transition: 0.3s;
 }
 
 /* DROPDOWN MENU */
 .buy-menu {
     position: absolute;
     left: 50%;
-    top: 100%; /* Краще позиціонувати відносно низу кнопки, а не bottom сторінки */
-    transform: translateX(-50%) translateY(20px) scale(.96);
-    width: 310px;
+    bottom: 70px; /* Над кнопкою */
+    transform: translateX(-50%) translateY(10px);
+    width: 260px;
     background: #e4dccd;
-    padding: 18px 0;
     opacity: 0;
     visibility: hidden;
-    pointer-events: none;
-    transition: opacity .25s ease, transform .25s ease, visibility .25s;
-    
+    transition: 0.3s;
+    padding: 10px 0;
+    z-index: 20;
+
     clip-path: polygon(
-        15px 0, calc(100% - 15px) 0, 
-        100% 15px, 100% calc(100% - 15px), 
-        calc(100% - 15px) 100%, 15px 100%, 
-        0 calc(100% - 15px), 0 15px
+        10px 0, calc(100% - 10px) 0, 
+        100% 10px, 100% calc(100% - 10px), 
+        calc(100% - 10px) 100%, 10px 100%, 
+        0 calc(100% - 10px), 0 10px
     );
-    box-shadow: 0 0 0 2px rgba(0,0,0,.9), 0 20px 50px rgba(0,0,0,.45);
-    z-index: 10;
 }
 
 .buy-wrapper:hover .buy-menu {
     opacity: 1;
     visibility: visible;
-    pointer-events: auto;
-    transform: translateX(-50%) translateY(10px) scale(1);
+    transform: translateX(-50%) translateY(0);
+}
+
+.buy-wrapper:hover .btn-arrow {
+    transform: rotate(180deg);
 }
 
 .buy-menu a {
     display: flex;
     align-items: center;
-    gap: 18px;
-    padding: 16px 28px;
+    gap: 15px;
+    padding: 12px 25px;
     text-decoration: none;
-    color: #494949;
-    font-size: 28px;
+    color: #333;
+    font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
-    transition: .2s;
+    transition: 0.2s;
 }
 
 .buy-menu a:hover {
-    background: rgba(0,0,0,.06);
-    color: #000;
-    padding-left: 36px;
+    background: rgba(0,0,0,0.05);
+    padding-left: 30px;
 }
 
 .buy-menu img {
-    width: 26px;
-    height: 26px;
-    object-fit: contain;
+    width: 22px;
+    height: 22px;
 }
 
-/* MOBILE ADAPTATION */
-@media(max-width: 900px) {
-    nav {
-        padding: 24px;
-    }
-    nav ul {
-        gap: 24px;
-    }
-    nav a {
-        font-size: 22px;
-    }
-    .hero h1 {
-        letter-spacing: 5px;
-    }
-    .hero p {
-        font-size: 24px;
-    }
-    .stalker-btn {
-        height: 60px;
-    }
-    .btn-accent::after {
-        border-top: 30px solid transparent;
-        border-bottom: 30px solid transparent;
-    }
-    .btn-text {
-        font-size: 24px;
-        padding: 0 26px 0 16px;
-    }
-    .btn-accent {
-        width: 66px;
-        font-size: 26px;
-    }
+/* ANIMATIONS */
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    30% { opacity: 0.95; }
+    32% { opacity: 0.8; }
+    34% { opacity: 0.95; }
+    70% { opacity: 1; }
+    72% { opacity: 0.9; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    nav { padding: 20px; }
+    nav ul { display: none; } /* Ховаємо меню на мобільних для простоти */
+    .hero h1 { font-size: 60px; }
+    .stalker-btn { height: 50px; }
+    .btn-text { font-size: 18px; }
 }
