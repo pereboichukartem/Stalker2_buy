@@ -230,10 +230,25 @@ nav a:hover::after { width: 100%; }
     padding-left: 30px;
 }
 
-.buy-menu img {
-    width: 22px;
-    height: 22px;
+/* Стилізація іконок Font Awesome у меню */
+.buy-menu i {
+    width: 24px;
+    font-size: 20px;
+    color: #494949; /* Колір як у тексту */
+    display: flex;
+    justify-content: center;
+    transition: 0.2s;
 }
+
+.buy-menu a:hover i {
+    color: #000; /* Темнішає при наведенні разом з текстом */
+    transform: scale(1.1);
+}
+
+/* Специфічні кольори для брендів (за бажанням) */
+.fa-steam { color: #1b2838; }
+.fa-xbox { color: #107c10; }
+.fa-microsoft { color: #00a4ef; }
 
 /* ANIMATIONS */
 @keyframes flicker {
