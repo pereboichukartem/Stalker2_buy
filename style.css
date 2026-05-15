@@ -1,87 +1,769 @@
-/* --- ОСНОВНЕ (Зберігаємо попереднє) --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Rajdhani', sans-serif; background: #0b0c0b; color: white; overflow-x: hidden; }
+/* --- ОСНОВНЕ --- */
+:root {
+    --primary-color: #FDB515;
+    /* Офіційний жовто-помаранчевий колір */
+    --dark-bg: #0b0c0b;
+}
 
-.bg-video { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: -1; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--dark-bg);
+    color: white;
+    overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+.section-title,
+.stalker-btn,
+.header-buy-btn,
+.header-nav a {
+    font-family: 'Teko', sans-serif;
+}
+
+/* --- ВІДЕО ТА ЕФЕКТИ ЕКРАНУ --- */
+.bg-video {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -3;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: -2;
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+}
+
+/* --- HEADER --- */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 75px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 40px;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Ліва частина Header */
+.header-left {
+    gap: 30px;
+}
+
+.gsc-logo,
+.game-logo {
+    height: 35px;
+    object-fit: contain;
+}
+
+.header-nav {
+    display: flex;
+    gap: 25px;
+    margin-left: 10px;
+}
+
+.header-nav a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.header-nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Права частина Header */
+.header-right {
+    gap: 25px;
+}
+
+.socials-header {
+    display: flex;
+    gap: 15px;
+}
+
+.socials-header a {
+    color: #888;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.socials-header a:hover {
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+/* --- ВИБІР МОВИ (Кнопка та Меню) --- */
+.lang-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* Дизайн кнопки (сірий фон, заокруглені кути) */
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    /* Напівпрозорий сірий */
+    color: #aaa;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.lang-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-btn .arrow {
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+/* Випадаюче меню (3 колонки) */
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    background: #333333;
+    /* Темно-сірий фон як на скріншоті */
+    padding: 25px;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px 40px;
+    /* Відступи між колонками та рядками */
+    width: max-content;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+
+/* Клас, який додає JavaScript при кліку */
+.lang-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.lang-menu a {
+    color: #999;
+    text-decoration: none;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.lang-menu a:hover {
+    color: #fff;
+}
+
+/* Активна мова виділяється фірмовим кольором */
+.lang-menu a.active {
+    color: var(--primary-color);
+}
+
+/* Бежева кнопка КУПИТИ у хеадері */
+.header-buy-btn {
+    display: flex;
+    align-items: center;
+    background: #EAE3D2;
+    color: #000;
+    text-decoration: none;
+    height: 42px;
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: filter 0.2s;
+    clip-path: polygon(2% 0, 98% 0, 100% 5%, 100% 95%, 98% 100%, 2% 100%, 0 95%, 0 5%);
+}
+
+.header-buy-btn:hover {
+    filter: brightness(1.05);
+}
+
+.header-buy-btn .btn-icon {
+    background: var(--primary-color);
+    height: 100%;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #000;
+}
+
+.header-buy-btn .btn-text {
+    padding: 0 15px;
+    letter-spacing: 1px;
+}
+
+.header-buy-btn .btn-arrow {
+    padding-right: 12px;
+    font-size: 14px;
+}
+
+/* --- УНІВЕРСАЛЬНА КНОПКА (В бажане / Купити в картках) --- */
+.stalker-btn {
+    display: inline-flex;
+    align-items: center;
+    background: var(--primary-color);
+    color: #000;
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: 700;
+    clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+    transition: 0.2s ease-in-out;
+    height: 65px;
+    cursor: pointer;
+}
+
+.stalker-btn:hover {
+    background: #fff;
+    box-shadow: 0 5px 15px rgba(253, 181, 21, 0.4);
+    transform: translateY(-2px);
+}
+
+.btn-accent {
+    background: #000;
+    color: var(--primary-color);
+    width: 60px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.btn-text {
+    padding: 0 25px;
+    letter-spacing: 1px;
+}
+
+.btn-arrow {
+    padding-right: 15px;
+    font-size: 18px;
+}
+
+/* Розмір для карток видань */
+.btn-small-size {
+    height: 40px;
+    font-size: 20px;
+}
+
+.btn-small-size .btn-accent {
+    width: 40px;
+    font-size: 16px;
+}
+
+.btn-small-size .btn-text {
+    padding: 0 15px;
+}
+
+.btn-small-size .btn-arrow {
+    padding-right: 12px;
+    font-size: 14px;
+}
+
+/* --- ВИПАДАЮЧЕ МЕНЮ КНОПОК --- */
+.buy-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.buy-menu {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 10px);
+    min-width: 250px;
+    background: rgba(15, 15, 15, 0.95);
+    border: 1px solid var(--primary-color);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.buy-wrapper:hover .buy-menu {
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+}
+
+/* Центрування для великої кнопки */
+.hero .buy-menu {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Вирівнювання для хеадера */
+.header-right .buy-menu {
+    left: auto;
+    right: 0;
+}
+
+/* Меню в картках відкривається вгору */
+.edition-card .buy-menu {
+    top: auto;
+    bottom: calc(100% + 5px);
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.edition-card .buy-wrapper:hover .buy-menu {
+    top: auto;
+    bottom: 100%;
+}
+
+.buy-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.buy-menu a:hover {
+    background: var(--primary-color);
+    color: #000;
+}
+
+.buy-menu i {
+    width: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(60px, 12vw, 150px);
+    line-height: 0.9;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+.hero .subtitle {
+    font-size: 24px;
+    letter-spacing: 15px;
+    color: var(--primary-color);
+    margin-bottom: 60px;
+    text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* --- SECTION TITLES --- */
 .section-title {
-    font-size: 48px;
+    font-size: 64px;
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 40px;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
+    color: #fff;
+    text-shadow: 0 0 10px rgba(253, 181, 21, 0.3);
 }
 
-/* --- NAVBAR & HERO (Вже є) --- */
-nav { padding: 25px 50px; display: flex; justify-content: space-between; align-items: center; }
-nav ul { display: flex; gap: 30px; list-style: none; }
-nav a { color: white; text-decoration: none; font-weight: 700; font-size: 20px; }
-
-.hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.hero h1 { font-size: clamp(50px, 10vw, 120px); animation: flicker 5s infinite; }
-
-/* --- BUTTON & DROPDOWN --- */
-.buy-wrapper { position: relative; display: inline-block; }
-.stalker-btn {
-    display: inline-flex; align-items: center; height: 60px; background: #e4dccd; color: #111;
-    text-decoration: none; font-weight: 700; font-size: 24px;
-    clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+/* --- ABOUT SECTION (ПРО ГРУ) --- */
+.about-section {
+    padding: 100px 50px;
+    background: #0b0c0b;
+    /* Темний фон */
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    /* Легка лінія зверху */
 }
-.btn-accent { 
-    width: 70px; height: 100%; background: #d89b17; display: flex; align-items: center; justify-content: center;
-    clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
+
+/* Декоративний розділювач під заголовком */
+.title-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: -30px;
+    margin-bottom: 50px;
 }
-.btn-text { padding: 0 30px 0 15px; }
 
-.buy-menu {
-    position: absolute; left: 50%; bottom: 70px; transform: translateX(-50%); width: 260px;
-    background: #e4dccd; opacity: 0; visibility: hidden; transition: 0.3s; padding: 10px 0; z-index: 20;
-    clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+.title-divider .line {
+    width: 60px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
 }
-.buy-wrapper:hover .buy-menu { opacity: 1; visibility: visible; }
-.buy-menu a { display: flex; align-items: center; gap: 15px; padding: 12px 25px; color: #333; text-decoration: none; font-weight: 700; text-transform: uppercase; }
-.buy-menu i { width: 20px; font-size: 18px; text-align: center; }
 
-/* --- MEDIA SECTION --- */
-.media-section { padding: 80px 50px; background: rgba(22, 26, 22, 0.8); }
-.media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-.media-item { height: 200px; background: #333; overflow: hidden; border: 1px solid #444; }
-.media-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; cursor: pointer; }
-.media-item:hover img { transform: scale(1.1); }
+.title-divider i {
+    color: var(--primary-color);
+    font-size: 14px;
+}
 
-/* --- EDITIONS SECTION --- */
-.editions-section { padding: 80px 50px; }
-.editions-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+/* Контейнер для тексту та картинки */
+.about-content {
+    display: flex;
+    gap: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+/* Текст */
+.about-text {
+    flex: 1;
+}
+
+.about-description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #ddd;
+    margin-bottom: 25px;
+}
+
+.about-list {
+    list-style: none;
+    /* Прибираємо стандартні крапки */
+    padding: 0;
+}
+
+.about-list li {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--primary-color);
+    /* Колір тексту списку */
+    margin-bottom: 12px;
+    position: relative;
+    padding-left: 20px;
+}
+
+/* Робимо помаранчеві крапки для списку */
+.about-list li::before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Картинка */
+.about-image-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.about-image {
+    width: 100%;
+    border-radius: 4px;
+    display: block;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Значок PEGI 18 чисто на CSS (щоб не шукати картинку) */
+.pegi-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: #e30613;
+    /* Червоний колір PEGI */
+    color: white;
+    width: 60px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.pegi-number {
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+    margin-top: 5px;
+}
+
+.pegi-text {
+    font-size: 8px;
+    background: #000;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 2px 0;
+    margin-top: auto;
+}
+
+/* Адаптивність для мобільних телефонів (щоб картинка і текст стали в колонку) */
+@media (max-width: 900px) {
+    .about-content {
+        flex-direction: column;
+    }
+}
+
+/* --- MEDIA SECTION (Слайдер) --- */
+.media-section {
+    padding: 100px 0;
+    background: var(--dark-bg);
+    position: relative;
+}
+
+.media-slider {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 0 50px 40px 50px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+.media-slider::-webkit-scrollbar {
+    height: 4px;
+}
+
+.media-slider::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 35vw;
+    border-radius: 4px;
+}
+
+.media-slider::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+.media-slider::-webkit-scrollbar-thumb:hover {
+    background: #fff;
+}
+
+.media-item {
+    flex: 0 0 auto;
+    width: 60vw;
+    max-width: 700px;
+    background: #111;
+    overflow: hidden;
+    border-radius: 8px;
+    scroll-snap-align: center;
+}
+
+.media-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease, filter 0.4s ease;
+    filter: brightness(0.8);
+}
+
+.media-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* --- EDITIONS SECTION (Картки) --- */
+.editions-section {
+    padding: 100px 50px;
+    background: url('assets/img/noise.png'), #0b0c0b;
+}
+
+.editions-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
 .edition-card {
-    background: rgba(255,255,255,0.05); width: 350px; border: 1px solid #333;
-    transition: 0.3s; position: relative;
+    background: #111111;
+    width: 380px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    border-top: 3px solid transparent;
 }
-.edition-card:hover { border-color: #d89b17; transform: translateY(-10px); }
-.card-img img { width: 100%; display: block; }
-.card-info { padding: 25px; background: #1a1c1a; }
-.card-info h3 { font-size: 24px; margin-bottom: 20px; text-transform: uppercase; }
-.price-row { display: flex; justify-content: space-between; align-items: center; }
-.price { font-size: 20px; font-weight: 700; color: #d89b17; }
 
-.buy-small-btn {
-    background: #e4dccd; border: none; padding: 10px 15px; font-weight: 700; cursor: pointer;
-    clip-path: polygon(5px 0, 100% 0, 100% calc(100% - 5px), calc(100% - 5px) 100%, 0 100%, 0 5px);
+.edition-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+}
+
+.edition-card:nth-child(1):hover {
+    border-top-color: #aaa;
+}
+
+.edition-card:nth-child(2):hover {
+    border-top-color: #1f8a4c;
+}
+
+.edition-card.accent-card {
+    border-top-color: #1f8a4c;
+}
+
+.edition-card:nth-child(3):hover {
+    border-top-color: var(--primary-color);
+}
+
+.card-img img {
+    width: 100%;
+    display: block;
+}
+
+.card-info {
+    padding: 30px 25px;
+}
+
+.card-info h3 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--primary-color);
 }
 
 /* --- FOOTER --- */
-footer { background: #050505; padding: 60px 50px; border-top: 1px solid #222; text-align: center; }
-.footer-links { margin-bottom: 30px; }
-.footer-links a { color: #888; text-decoration: none; margin: 0 10px; font-size: 14px; }
-.footer-links a:hover { color: #d89b17; }
-.socials { font-size: 24px; margin-bottom: 20px; display: flex; justify-content: center; gap: 20px; color: #888; }
-.socials i { cursor: pointer; transition: 0.3s; }
-.socials i:hover { color: white; }
-footer p { font-size: 12px; color: #555; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+footer {
+    background: #050505;
+    padding: 80px 50px 40px;
+    border-top: 1px solid #1a1a1a;
+    text-align: center;
+}
 
-/* FLICKER ANIMATION */
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    33% { opacity: 0.8; }
-    35% { opacity: 1; }
+.footer-links {
+    margin-bottom: 40px;
+}
+
+.footer-links a {
+    color: #888;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--primary-color);
+}
+
+.socials {
+    font-size: 28px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    color: #666;
+}
+
+.socials i {
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.socials i:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+footer p {
+    font-size: 14px;
+    color: #444;
+    margin: 0 auto;
+    letter-spacing: 1px;
+}
+
+/* --- АДАПТИВНІСТЬ --- */
+@media (max-width: 1200px) {
+
+    .header-nav,
+    .lang-selector,
+    .gsc-logo {
+        display: none;
+    }
+
+    .header-left {
+        gap: 0;
+    }
+
+    .header-right {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .media-item {
+        width: 85vw;
+        height: 250px;
+    }
+
+    .media-slider::-webkit-scrollbar-track {
+        margin: 0 10vw;
+    }
 }
