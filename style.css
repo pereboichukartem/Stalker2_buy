@@ -742,7 +742,6 @@ footer p {
 /* --- АДАПТИВНІСТЬ --- */
 @media (max-width: 1200px) {
 
-    .header-nav,
     .lang-selector,
     .gsc-logo {
         display: none;
