@@ -235,87 +235,368 @@
 
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const langBtn = document.querySelector('.lang-btn');
-            const langMenu = document.querySelector('.lang-menu');
-            const currentLangText = document.querySelector('.current-lang');
-            const langLinks = document.querySelectorAll('.lang-menu a');
+document.addEventListener('DOMContentLoaded', () => {
 
-            // Словник перекладів для нашого макету
-            const translations = {
-                "Українська": {
-                    buyBtn: "КУПИТИ",
-                    wishlist: "В БАЖАНЕ",
-                    mediaTitle: "МЕДІА",
-                    editionsTitle: "ВИДАННЯ"
-                },
-                "English": {
-                    buyBtn: "PRE-ORDER",
-                    wishlist: "WISHLIST",
-                    mediaTitle: "MEDIA",
-                    editionsTitle: "EDITIONS"
-                },
-                "Polski": {
-                    buyBtn: "KUP TERAZ",
-                    wishlist: "DO LISTY ŻYCZEŃ",
-                    mediaTitle: "MULTIMEDIA",
-                    editionsTitle: "EDYCJE"
-                }
-            };
+    const langBtn = document.querySelector('.lang-btn');
+    const langMenu = document.querySelector('.lang-menu');
+    const currentLangText = document.querySelector('.current-lang');
+    const langLinks = document.querySelectorAll('.lang-menu a');
 
-            // Відкриття по кліку
-            langBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                langMenu.classList.toggle('show');
-            });
+    const translations = {
 
-            // Закриття при кліку в іншому місці
-            document.addEventListener('click', (e) => {
-                if (!langMenu.contains(e.target) && !langBtn.contains(e.target)) {
-                    langMenu.classList.remove('show');
-                }
-            });
+        "Українська": {
 
-            // Логіка зміни мови
-            langLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
+            // NAV
 
-                    // 1. Оновлюємо помаранчеве виділення у списку
-                    langLinks.forEach(l => l.classList.remove('active'));
-                    link.classList.add('active');
+            navHome: "Головна",
+            navAbout: "Про гру",
+            navBuy: "Купити",
 
-                    // 2. Міняємо текст на самій кнопці
-                    const newLang = link.textContent;
-                    currentLangText.textContent = newLang;
+            // HERO
 
-                    // 3. Змінюємо текст на сторінці (Переклад)
-                    if (translations[newLang]) {
-                        const t = translations[newLang];
+            heroTitle: "S.T.A.L.K.E.R. 2",
+            heroSubtitle: "HEART OF CHORNOBYL",
+            heroBtn: "В БАЖАНЕ",
 
-                        // Змінюємо кнопки "Купити" (у хеадері та картках)
-                        document.querySelectorAll('.header-buy-btn .btn-text, .edition-card .btn-text').forEach(el => {
-                            el.textContent = t.buyBtn;
-                        });
+            // SECTION TITLES
 
-                        // Змінюємо кнопку "В бажане"
-                        const wishlistBtn = document.querySelector('.hero .btn-text');
-                        if (wishlistBtn) wishlistBtn.textContent = t.wishlist;
+            aboutTitle: "ПРО ГРУ",
+            mediaTitle: "МЕДІА",
+            editionsTitle: "ВИДАННЯ",
+            featuresTitle: "ОСОБЛИВОСТІ",
 
-                        // Змінюємо заголовки секцій
-                        const sectionTitles = document.querySelectorAll('.section-title');
-                        if (sectionTitles.length >= 2) {
-                            sectionTitles[0].textContent = t.mediaTitle;
-                            sectionTitles[1].textContent = t.editionsTitle;
-                        }
-                    }
+            // ABOUT TEXT
 
-                    // 4. Закриваємо меню
-                    langMenu.classList.remove('show');
-                });
-            });
+            aboutDescription:
+                "S.T.A.L.K.E.R. 2 — це атмосферний survival horror шутер з відкритим світом.",
+
+            feature1:
+                "Унікальний геймплей з елементами шутера та survival horror.",
+
+            feature2:
+                "Нелінійний сюжет у Чорнобильській зоні.",
+
+            feature3:
+                "Реалістична графіка Unreal Engine 5.",
+
+            feature4:
+                "Система виживання та аномалії.",
+
+            // EDITIONS
+
+            standard: "STANDARD EDITION",
+            deluxe: "DELUXE EDITION",
+            ultimate: "ULTIMATE EDITION",
+
+            buyBtn: "КУПИТИ",
+
+            // FOOTER
+
+            footerMods: "Модифікації",
+            footerUpdates: "Оновлення",
+            footerFaq: "F.A.Q.",
+            footerSupport: "Підтримка"
+
+        },
+
+        "English": {
+
+            navHome: "Home",
+            navAbout: "About",
+            navBuy: "Buy",
+
+            heroTitle: "S.T.A.L.K.E.R. 2",
+            heroSubtitle: "HEART OF CHORNOBYL",
+            heroBtn: "WISHLIST",
+
+            aboutTitle: "ABOUT GAME",
+            mediaTitle: "MEDIA",
+            editionsTitle: "EDITIONS",
+            featuresTitle: "FEATURES",
+
+            aboutDescription:
+                "S.T.A.L.K.E.R. 2 is an atmospheric survival horror shooter with an open world.",
+
+            feature1:
+                "Unique gameplay with shooter and survival horror elements.",
+
+            feature2:
+                "Non-linear story inside the Chornobyl Zone.",
+
+            feature3:
+                "Realistic graphics powered by Unreal Engine 5.",
+
+            feature4:
+                "Survival mechanics and anomalies.",
+
+            standard: "STANDARD EDITION",
+            deluxe: "DELUXE EDITION",
+            ultimate: "ULTIMATE EDITION",
+
+            buyBtn: "BUY NOW",
+
+            footerMods: "Modding",
+            footerUpdates: "Updates",
+            footerFaq: "F.A.Q.",
+            footerSupport: "Support"
+
+        },
+
+        "Polski": {
+
+            navHome: "Główna",
+            navAbout: "O grze",
+            navBuy: "Kup",
+
+            heroTitle: "S.T.A.L.K.E.R. 2",
+            heroSubtitle: "HEART OF CHORNOBYL",
+            heroBtn: "DO LISTY",
+
+            aboutTitle: "O GRZE",
+            mediaTitle: "MEDIA",
+            editionsTitle: "EDYCJE",
+            featuresTitle: "FUNKCJE",
+
+            aboutDescription:
+                "S.T.A.L.K.E.R. 2 to klimatyczny survival horror z otwartym światem.",
+
+            feature1:
+                "Unikalna rozgrywka z elementami shootera i survival horroru.",
+
+            feature2:
+                "Nieliniowa fabuła w Strefie Czarnobyla.",
+
+            feature3:
+                "Realistyczna grafika Unreal Engine 5.",
+
+            feature4:
+                "Mechaniki przetrwania i anomalie.",
+
+            standard: "STANDARD EDITION",
+            deluxe: "DELUXE EDITION",
+            ultimate: "ULTIMATE EDITION",
+
+            buyBtn: "KUP TERAZ",
+
+            footerMods: "Modyfikacje",
+            footerUpdates: "Aktualizacje",
+            footerFaq: "F.A.Q.",
+            footerSupport: "Wsparcie"
+
+        }
+
+    };
+
+    // OPEN LANGUAGE MENU
+
+    langBtn.addEventListener('click', (e) => {
+
+        e.stopPropagation();
+
+        langMenu.classList.toggle('show');
+
+    });
+
+    // CLOSE MENU
+
+    document.addEventListener('click', (e) => {
+
+        if (!langMenu.contains(e.target) &&
+            !langBtn.contains(e.target)) {
+
+            langMenu.classList.remove('show');
+
+        }
+
+    });
+
+    // APPLY LANGUAGE
+
+    function applyLanguage(lang) {
+
+        const t = translations[lang];
+
+        if (!t) return;
+
+        currentLangText.textContent = lang;
+
+        // NAVIGATION
+
+        const navLinks = document.querySelectorAll('.header-nav a');
+
+        if (navLinks.length >= 3) {
+
+            navLinks[0].textContent = t.navHome;
+            navLinks[1].textContent = t.navAbout;
+            navLinks[2].textContent = t.navBuy;
+
+        }
+
+        // HERO
+
+        const heroTitle = document.querySelector('.hero h1');
+
+        if (heroTitle) {
+
+            heroTitle.textContent = t.heroTitle;
+
+        }
+
+        const heroSubtitle = document.querySelector('.subtitle');
+
+        if (heroSubtitle) {
+
+            heroSubtitle.textContent = t.heroSubtitle;
+
+        }
+
+        const heroBtn = document.querySelector('.hero .btn-text');
+
+        if (heroBtn) {
+
+            heroBtn.textContent = t.heroBtn;
+
+        }
+
+        // SECTION TITLES
+
+        const sectionTitles = document.querySelectorAll('.section-title');
+
+        if (sectionTitles[0]) {
+
+            sectionTitles[0].textContent = t.aboutTitle;
+
+        }
+
+        if (sectionTitles[1]) {
+
+            sectionTitles[1].textContent = t.mediaTitle;
+
+        }
+
+        if (sectionTitles[2]) {
+
+            sectionTitles[2].textContent = t.editionsTitle;
+
+        }
+
+        // ABOUT DESCRIPTION
+
+        const aboutDescription =
+            document.querySelector('.about-description');
+
+        if (aboutDescription) {
+
+            aboutDescription.textContent =
+                t.aboutDescription;
+
+        }
+
+        // ABOUT LIST
+
+        const aboutList =
+            document.querySelectorAll('.about-list li');
+
+        if (aboutList.length >= 4) {
+
+            aboutList[0].textContent = t.feature1;
+            aboutList[1].textContent = t.feature2;
+            aboutList[2].textContent = t.feature3;
+            aboutList[3].textContent = t.feature4;
+
+        }
+
+        // EDITIONS
+
+        const editionTitles =
+            document.querySelectorAll('.edition-card h3');
+
+        if (editionTitles.length >= 3) {
+
+            editionTitles[0].textContent = t.standard;
+            editionTitles[1].textContent = t.deluxe;
+            editionTitles[2].textContent = t.ultimate;
+
+        }
+
+        // BUY BUTTONS
+
+        document.querySelectorAll(
+            '.btn-text'
+        ).forEach(btn => {
+
+            if (
+                btn.textContent.includes('КУПИТИ') ||
+                btn.textContent.includes('BUY') ||
+                btn.textContent.includes('KUP')
+            ) {
+
+                btn.textContent = t.buyBtn;
+
+            }
+
         });
-    </script>
+
+        // FOOTER
+
+        const footerLinks =
+            document.querySelectorAll('.footer-links a');
+
+        if (footerLinks.length >= 4) {
+
+            footerLinks[0].textContent = t.footerMods;
+            footerLinks[1].textContent = t.footerUpdates;
+            footerLinks[2].textContent = t.footerFaq;
+            footerLinks[3].textContent = t.footerSupport;
+
+        }
+
+        // SAVE LANGUAGE
+
+        localStorage.setItem('siteLanguage', lang);
+
+    }
+
+    // CLICK LANGUAGE
+
+    langLinks.forEach(link => {
+
+        link.addEventListener('click', (e) => {
+
+            e.preventDefault();
+
+            langLinks.forEach(l => {
+
+                l.classList.remove('active');
+
+            });
+
+            link.classList.add('active');
+
+            const selectedLang =
+                link.textContent.trim();
+
+            applyLanguage(selectedLang);
+
+            langMenu.classList.remove('show');
+
+        });
+
+    });
+
+    // LOAD SAVED LANGUAGE
+
+    const savedLang =
+        localStorage.getItem('siteLanguage');
+
+    if (savedLang && translations[savedLang]) {
+
+        applyLanguage(savedLang);
+
+    }
+
+});
+</script>
 </body>
 
 </html>
